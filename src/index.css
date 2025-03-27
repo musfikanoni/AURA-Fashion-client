@@ -1,0 +1,7 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@theme {
+    --color-pcolor: oklch(0.87 0.06 150);
+
+}
