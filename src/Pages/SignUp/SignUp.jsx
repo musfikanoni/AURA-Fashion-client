@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { AuthContext } from '../../Providers/AuthProviders';
 import { useNavigate } from 'react-router-dom';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
+import SocialLogin from '../SocialLogin/SocialLogin';
 
 const SignUp = () => {
     const axiosPublic = useAxiosPublic();
@@ -107,6 +108,7 @@ const SignUp = () => {
                                     <input type="confirm-password" className="input mt-3 w-full" placeholder="Re-Enter Password"
                                     {...register("confirm-password", { required: true })} />
                                     <button type='submit' className="btn btn-block mt-5">Sign Up</button>
+                                    <SocialLogin></SocialLogin>
                                 </form>
                             </fieldset>
                         </div>
