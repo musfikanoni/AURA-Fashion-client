@@ -1,16 +1,68 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from "react-hook-form"
+import Swal from 'sweetalert2';
+import { AuthContext } from '../../Providers/AuthProviders';
+import { useNavigate } from 'react-router-dom';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
 
 const SignUp = () => {
+    const axiosPublic = useAxiosPublic();
+
+    const {createUser, updateUserProfile} = useContext(AuthContext);
+    const navigate = useNavigate();
+    
 
     const {
         register,
-        handleSubmit,
+        handleSubmit, 
+        reset,
         formState: { errors },
       } = useForm()
 
       const onSubmit = data => {
-        console.log(data)}
+        console.log(data)
+        createUser(data.email, data.password)
+        .then(result => {
+            const loggedUser = result.user;
+            console.log(loggedUser);
+            updateUserProfile(data.name, data.photoURL)
+            .then(() => {
+                const userInfo = {
+                    name: data.name,
+                    email: data.email,
+                    photoURL: data.photoURL
+                }
+                axiosPublic.post('/users', userInfo)
+                .then(res =>{
+                    if(res.data.insertedId){
+                        console.log('user added')
+                        reset();
+                        Swal.fire({
+                            title: "Sign Up Successful",
+                            icon: "success",
+                            showClass: {
+                                popup: `
+                                animate__animated
+                                animate__fadeInUp
+                                animate__faster
+                                `
+                            },
+                            hideClass: {
+                                popup: `
+                                animate__animated
+                                animate__fadeOutDown
+                                animate__faster
+                                `
+                            }
+                        });
+                    }
+                    navigate('/');
+                })
+                
+            })
+            .catch(error => console.log(error));
+        })
+    }
 
     return (
         <div className="hero bg-base-200 min-h-screen">
