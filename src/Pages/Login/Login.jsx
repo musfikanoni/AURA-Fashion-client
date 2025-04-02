@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../Providers/AuthProviders';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Login = () => {
     // const [disabled, setDisabled] = useState(true);
@@ -58,6 +58,7 @@ const Login = () => {
                             Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
                             quasi. In deleniti eaque aut repudiandae et a id nisi.
                         </p>
+                        Create an account <b className='text-teal-500'><Link to="/signup">Sign Up</Link></b>
                     </div>
 
                     
