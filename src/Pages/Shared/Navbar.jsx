@@ -20,7 +20,7 @@ const Navbar = () => {
     }
 
     return (
-        <div className=" bg-pcolor shadow-sm">
+        <div className=" bg-pcolor/50 sticky backdrop-blur py-1 shadow-sm">
             <div className='w-11/12 mx-auto'>
                 <div className="navbar">
                     <div className="navbar-start">
@@ -45,7 +45,7 @@ const Navbar = () => {
 
 
                         <div className="navbar-center hidden lg:flex">
-                            <ul className="menu menu-horizontal px-1">
+                            <ul className="menu menu-horizontal menu__btn text-lg font- text-gray-700 px-1">
                                 {links}
                             </ul>
                         </div>
@@ -80,7 +80,8 @@ const Navbar = () => {
                                     <button className='btn'>Sign Up</button>
                                 </Link> */}
                                 <Link to="/login">
-                                    <button className='btn'>Login</button>
+                                    <button className='btn bg-teal-700 text-white border-none
+                                    text-base font-semibold'>Login</button>
                                 </Link>
                             </>
                         }
