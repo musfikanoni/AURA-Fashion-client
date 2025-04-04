@@ -2,15 +2,23 @@ import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import siteLogo from '../../assets/logo.png';
 import useAuth from '../../hooks/useAuth';
+import { Badge } from 'antd';
+import { PiShoppingCart } from "react-icons/pi";
 
 const Navbar = () => {
     const {user, logOutUser} = useAuth();
 
     const links = <>
-    <li><NavLink>Home</NavLink></li>
+    <li><NavLink to="/">Home</NavLink></li>
     <li><NavLink>About Us</NavLink></li>
     <li><NavLink>Contact Us</NavLink></li>
-
+    <li>
+        <Link to="/">
+            <Badge count={5} className=''>
+                <PiShoppingCart className='text-3xl text-gray-700' />
+            </Badge>
+        </Link>
+    </li>
     </>
 
     const handleLogOut = () => {
@@ -44,10 +52,11 @@ const Navbar = () => {
                         </div>
 
 
-                        <div className="navbar-center hidden lg:flex">
+                        <div className="navbar-center hidden lg:flex mr-4">
                             <ul className="menu menu-horizontal menu__btn text-lg font- text-gray-700 px-1">
                                 {links}
                             </ul>
+                        
                         </div>
 
                         {
@@ -70,7 +79,7 @@ const Navbar = () => {
                                     <span className="badge">New</span>
                                 </a>
                                 </li>
-                                <li><a>Settings</a></li>
+                                <li><Link to="/dashboard">Dashboard</Link></li>
                                 <li><button onClick={handleLogOut}>Log Out</button></li>
                             </ul>
                         </div>
