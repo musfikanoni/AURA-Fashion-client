@@ -31,8 +31,10 @@ const AuthProviders = ({children}) => {
         return signOut(auth);
     }
 
-    const updateUserProfile = (updatedData) => {
-        return updateProfile(auth.currentUser, updatedData)
+    const updateUserProfile = (name, photo, number) => {
+        return updateProfile(auth.currentUser, {
+            displayName: name, photoURL: photo, phoneNumber: number,
+        })
     }
 
     useEffect(() => {

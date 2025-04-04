@@ -20,7 +20,7 @@ const Navbar = () => {
     }
 
     return (
-        <div className=" bg-pcolor/50 sticky backdrop-blur py-1 shadow-sm">
+        <div className=" bg-emerald-500/60 sticky backdrop-blur py-1 shadow-sm">
             <div className='w-11/12 mx-auto'>
                 <div className="navbar">
                     <div className="navbar-start">
@@ -57,13 +57,13 @@ const Navbar = () => {
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                 <div className="w-10 rounded-full">
                                     <img
-                                        alt="Tailwind CSS Navbar component"
-                                        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                                        alt=""
+                                        src={user?.photoURL} />
                                 </div>
                             </div>
                             <ul
                                 tabIndex={0}
-                                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                                className="menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow">
                                 <li>
                                 <a className="justify-between">
                                     Profile
@@ -80,7 +80,7 @@ const Navbar = () => {
                                     <button className='btn'>Sign Up</button>
                                 </Link> */}
                                 <Link to="/login">
-                                    <button className='btn bg-teal-700 text-white border-none
+                                    <button className='btn bg-teal-700 text-white border-none shadow-none
                                     text-base font-semibold'>Login</button>
                                 </Link>
                             </>

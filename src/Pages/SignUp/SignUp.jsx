@@ -1,14 +1,18 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from "react-hook-form"
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../Providers/AuthProviders';
 import { useNavigate } from 'react-router-dom';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 import SocialLogin from '../SocialLogin/SocialLogin';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
+const userImage_hosting_key = import.meta.env.VITE_USERIMAGE_KEY;
+const userImage_hosting_api = `https://api.imgbb.com/1/upload?key=${userImage_hosting_key}`;
 
 const SignUp = () => {
     const axiosPublic = useAxiosPublic();
-
+    const [showPassword, setShowPassword] = useState(false);
     const {createUser, updateUserProfile} = useContext(AuthContext);
     const navigate = useNavigate();
     
@@ -20,18 +24,39 @@ const SignUp = () => {
         formState: { errors },
       } = useForm()
 
-      const onSubmit = data => {
+      
+
+      const onSubmit = async(data) => {
         console.log(data)
+        if (data.password !== data['confirm-password']) {
+            Swal.fire({
+                title: "Passwords do not match",
+                icon: "error"
+            });
+            return;
+        }
+
+        const imageFile = {image: data.file[0]}
+        const res = await axiosPublic.post(userImage_hosting_api, imageFile, {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        })
+        console.log(res.data);
         createUser(data.email, data.password)
         .then(result => {
             const loggedUser = result.user;
+            const imageURL = res.data.data.display_url;
+            const currentDateTime = new Date().toUTCString();
             console.log(loggedUser);
-            updateUserProfile(data.name, data.photoURL)
+            updateUserProfile(data.name, data.number, imageURL)
             .then(() => {
                 const userInfo = {
-                    name: data.name,
+                    name: data?.name,
                     email: data.email,
-                    photoURL: data.photoURL
+                    number: data.number,
+                    created_at: currentDateTime,
+                    photoURL: imageURL
                 }
                 axiosPublic.post('/users', userInfo)
                 .then(res =>{
@@ -83,7 +108,7 @@ const SignUp = () => {
                             <fieldset className="fieldset ">
                                 <form onSubmit={handleSubmit(onSubmit)}>
                                     {/* Name */}
-                                    <input type="name" className="input w-full" placeholder="Name"
+                                    <input type="text" className="input w-full" placeholder="Name"
                                     {...register("name", { required: true })} />
                                     {errors.name && <span className="text-red-600">Name is required</span>}
 
@@ -103,10 +128,28 @@ const SignUp = () => {
                                     {errors.file && <span className="text-red-600">Photo is required</span>}
 
                                     {/* password */}
-                                    <input type="password" className="input mt-3 w-full" placeholder="Password"
-                                    {...register("password", { required: true })} />
-                                    <input type="confirm-password" className="input mt-3 w-full" placeholder="Re-Enter Password"
+                                    <input type={showPassword? 'text' : 'password'} className="input mt-3 w-full"
+                                     placeholder="Password" 
+                                     {...register("password", { required: true,
+                                        minLength: 6, 
+                                        maxLength: 20,
+                                        pattern: /(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9])(?=.*[a-z])/ })} />
+                                    {errors.password?.type === 'required' && <span className="text-red-600">Password is required</span>}
+                                    {errors.password?.type === 'minLength' && <span className="text-red-600">Password must be 6 characters</span>}
+                                    {errors.password?.type === 'maxLength' && <span className="text-red-600">Password must be less 20 characters</span>}
+                                    {errors.password?.type === 'pattern' && <span className="text-red-600">Password must one uppercase, one lowercase, one number, one special character</span>}
+                                    <button className="btn absolute bg-transparent border-none right-6 top-[250px] z-10"
+                                    onClick={() => setShowPassword(!showPassword)}>
+                                        {
+                                            showPassword ? <FaEye className="text-lg text-gray-500" />
+                                             :<FaEyeSlash className="text-lg text-gray-500" /> 
+                                        }
+                                        
+                                    </button>
+
+                                    <input type="password" className="input mt-3 w-full" placeholder="Re-Enter Password"
                                     {...register("confirm-password", { required: true })} />
+                                    {errors.name && <span className="text-red-600">Re-Enter Password is required</span>}
                                     <button type='submit' className="btn btn-block mt-5">Sign Up</button>
                                     <SocialLogin></SocialLogin>
                                 </form>
