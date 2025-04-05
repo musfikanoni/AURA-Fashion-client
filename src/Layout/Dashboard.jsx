@@ -1,16 +1,36 @@
 import React from 'react';
 import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
-const { Header, Content, Footer, Sider } = Layout;
-const items = [UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined].map(
-  (icon, index) => ({
-    key: String(index + 1),
-    icon: React.createElement(icon),
-    label: `nav ${index + 1}`,
-  }),
-);
+const { Header, Content, Sider } = Layout;
+import useAuth from '../hooks/useAuth';
+import { Link, Outlet } from 'react-router-dom';
+const items = [
+    {
+      key: '1',
+      icon: <UserOutlined />,
+      label: <Link to="/dashboard/profile">Profile</Link>,
+    },
+    {
+      key: '2',
+      icon: <UploadOutlined />,
+      label: 'Add',
+    },
+    {
+      key: '3',
+      icon: <VideoCameraOutlined />,
+      label: 'My Orders',
+    },
+    {
+      key: '4',
+      icon: <UserOutlined />,
+      label: 'Profile',
+    },
+  ];
+  
+
 
 const Dashboard = () => {
+    const {user} = useAuth() ;
     const {
         token: { colorBgContainer, borderRadiusLG },
       } = theme.useToken();
@@ -19,6 +39,8 @@ const Dashboard = () => {
         <div>
             <Layout>
                 <Sider
+                    style={{ backgroundColor: '#66D7B1' }}
+                    
                     breakpoint="lg"
                     collapsedWidth="0"
                     onBreakpoint={broken => {
@@ -28,8 +50,16 @@ const Dashboard = () => {
                     console.log(collapsed, type);
                     }}
                 >
-                    <div className="demo-logo-vertical" />
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']} items={items} />
+                    <div className="pt-10 pb-7"> 
+                        <div className="avatar grid justify-center">
+                            <div className="ring-teal-600 ring-offset-base-100 w-24 rounded-full ring ring-offset-2">
+                                <img src={user?.photoURL} />
+                            </div>
+                        </div>
+                        <p className='text-white text-center pt-5'>{user?.displayName}</p>
+                    </div>
+                    <Menu className="custom-menu" defaultSelectedKeys={['1']}
+                    theme='none' mode="inline" items={items} />
                 </Sider>
                 <Layout>
                     <Header style={{ padding: 0, background: colorBgContainer }} />
@@ -37,17 +67,14 @@ const Dashboard = () => {
                     <div
                         style={{
                         padding: 24,
-                        minHeight: 360,
+                        minHeight: '90vh',
                         background: colorBgContainer,
                         borderRadius: borderRadiusLG,
                         }}
                     >
-                        content
+                        <Outlet></Outlet>
                     </div>
                     </Content>
-                    {/* <Footer style={{ textAlign: 'center' }}>
-                    Ant Design ©{new Date().getFullYear()} Created by Ant UED
-                    </Footer> */}
                 </Layout>
             </Layout>
         </div>

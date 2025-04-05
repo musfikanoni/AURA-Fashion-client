@@ -6,3 +6,24 @@
     --color-pcolor: oklch(0.87 0.06 150);
 
 }
+
+.custom-menu .ant-menu-item-selected {
+    background-color: #3bb78f !important; 
+    color: white !important;              
+    border-radius: 8px;                  
+  }
+  
+  .custom-menu .ant-menu-item-selected a {
+    color: white !important;              
+  }
+
+  
+  .custom-menu .ant-menu-item:hover {
+    background-color: #50c8a0 !important;
+    color: white !important;
+  }
+  
+  .custom-menu .ant-menu-item:hover a {
+    color: white !important;
+  }
+  
