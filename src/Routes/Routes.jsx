@@ -8,6 +8,9 @@ import SignUp from "../Pages/SignUp/SignUp";
 import Login from "../Pages/Login/Login";
 import Dashboard from "../Layout/Dashboard";
 import Profile from "../Pages/Dashboard/Profile/Profile";
+import AddProducts from "../Pages/Dashboard/AddProducts/AddProducts";
+import Users from "../Pages/Dashboard/AllUsers/Users";
+import Cart from "../Pages/Dashboard/Cart/Cart";
 
 export const router = createBrowserRouter([
     {
@@ -36,6 +39,18 @@ export const router = createBrowserRouter([
             {
                path: 'profile',
                element: <Profile></Profile> 
+            },
+            {
+                path: 'addProducts',
+                element: <AddProducts></AddProducts>
+            },
+            {
+                path: 'users',
+                element: <Users></Users>,
+            },
+            {
+                path: 'cart',
+                element: <Cart></Cart>,
             }
         ]
     }

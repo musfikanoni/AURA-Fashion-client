@@ -1,5 +1,7 @@
 import React from 'react';
-import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
+import { UploadOutlined, UserOutlined } from '@ant-design/icons';
+import { LuUsersRound } from "react-icons/lu";
+import { BsCart4 } from "react-icons/bs";
 import { Layout, Menu, theme } from 'antd';
 const { Header, Content, Sider } = Layout;
 import useAuth from '../hooks/useAuth';
@@ -7,23 +9,23 @@ import { Link, Outlet } from 'react-router-dom';
 const items = [
     {
       key: '1',
-      icon: <UserOutlined />,
-      label: <Link to="/dashboard/profile">Profile</Link>,
+      icon: <UserOutlined className='bar-item' />,
+      label: <Link className='font-semibold text-base' to="/dashboard/profile">Profile</Link>,
     },
     {
       key: '2',
-      icon: <UploadOutlined />,
-      label: 'Add',
+      icon: <UploadOutlined className='bar-item' />,
+      label: <Link className='font-semibold text-base' to="/dashboard/addProducts" >Add Products</Link>,
     },
     {
       key: '3',
-      icon: <VideoCameraOutlined />,
-      label: 'My Orders',
+      icon: <LuUsersRound className='bar-item' />,
+      label: <Link className='font-semibold text-base' to="/dashboard/users">Users</Link>,
     },
     {
       key: '4',
-      icon: <UserOutlined />,
-      label: 'Profile',
+      icon: <BsCart4 className='bar-item' />,
+      label: <Link className='font-semibold text-base' to="/dashboard/cart">My Cart</Link>,
     },
   ];
   
@@ -58,7 +60,7 @@ const Dashboard = () => {
                         </div>
                         <p className='text-white text-center pt-5'>{user?.displayName}</p>
                     </div>
-                    <Menu className="custom-menu" defaultSelectedKeys={['1']}
+                    <Menu className="custom-menu grid items-center" defaultSelectedKeys={['1']}
                     theme='none' mode="inline" items={items} />
                 </Sider>
                 <Layout>
