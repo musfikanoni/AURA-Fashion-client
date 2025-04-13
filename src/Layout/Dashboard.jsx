@@ -1,41 +1,55 @@
 import React from 'react';
-import { UploadOutlined, UserOutlined } from '@ant-design/icons';
+import { HomeOutlined, UploadOutlined, UserOutlined } from '@ant-design/icons';
 import { LuUsersRound } from "react-icons/lu";
 import { BsCart4 } from "react-icons/bs";
 import { Layout, Menu, theme } from 'antd';
 const { Header, Content, Sider } = Layout;
 import useAuth from '../hooks/useAuth';
 import { Link, Outlet } from 'react-router-dom';
-const items = [
-    {
-      key: '1',
-      icon: <UserOutlined className='bar-item' />,
-      label: <Link className='font-semibold text-base' to="/dashboard/profile">Profile</Link>,
-    },
-    {
-      key: '2',
-      icon: <UploadOutlined className='bar-item' />,
-      label: <Link className='font-semibold text-base' to="/dashboard/addProducts" >Add Products</Link>,
-    },
-    {
-      key: '3',
-      icon: <LuUsersRound className='bar-item' />,
-      label: <Link className='font-semibold text-base' to="/dashboard/users">Users</Link>,
-    },
-    {
-      key: '4',
-      icon: <BsCart4 className='bar-item' />,
-      label: <Link className='font-semibold text-base' to="/dashboard/cart">My Cart</Link>,
-    },
-  ];
-  
+
+//TODO:
 
 
 const Dashboard = () => {
-    const {user} = useAuth() ;
+    const {user} = useAuth();
+    const isAdmin = true;
     const {
         token: { colorBgContainer, borderRadiusLG },
       } = theme.useToken();
+
+      const items = [
+
+        ...(isAdmin
+            ? [
+                {
+                    key: '1',
+                    icon: <UserOutlined className='bar-item' />,
+                    label: <Link className='font-semibold text-base' to="/dashboard/profile">Profile</Link>,
+                },
+                {
+                  key: '2',
+                  icon: <UploadOutlined className='bar-item' />,
+                  label: <Link className='font-semibold text-base' to="/dashboard/addProducts">Add Products</Link>,
+                },
+                {
+                  key: '3',
+                  icon: <LuUsersRound className='bar-item' />,
+                  label: <Link className='font-semibold text-base' to="/dashboard/users">Users</Link>,
+                },
+              ]
+            : [
+                {
+                  key: '4',
+                  icon: <BsCart4 className='bar-item' />,
+                  label: <Link className='font-semibold text-base' to="/dashboard/cart">My Cart</Link>,
+                },
+              ]),
+        {
+            // key: '2',
+            icon: <HomeOutlined className='bar-item' />,
+            label: <Link className='font-semibold text-base' to="/">Back to Home</Link>,
+        }
+      ];
 
     return (
         <div>
