@@ -39,7 +39,7 @@ const Dashboard = () => {
               ]
             : [
                 {
-                  key: '4',
+                  key: '3',
                   icon: <BsCart4 className='bar-item' />,
                   label: <Link className='font-semibold text-base' to="/dashboard/cart">My Cart</Link>,
                 },
